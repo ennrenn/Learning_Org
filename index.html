@@ -10,7 +10,7 @@
             --secondary-color: #3498db;
             --accent-color: #e74c3c;
             --light-color: #ecf0f1;
-            --dark-color: #2c3e50; /* Consider removing this as it's the same as --primary-color */
+            --dark-color: #2c3e50;
             --success-color: #2ecc71;
             --warning-color: #f39c12;
             --info-color: #3498db;
@@ -89,10 +89,6 @@
             color: white;
         }
 
-        .tab.org-chart {
-            border-bottom: 3px solid var(--primary-color);
-        }
-
         .tab.early-careers {
             border-bottom: 3px solid var(--early-careers-color);
         }
@@ -118,11 +114,6 @@
             display: block;
         }
 
-        .org-chart-wrapper { /* Renamed for clarity */
-            min-height: 600px;
-            position: relative;
-        }
-
         .dept-section {
             margin-bottom: 40px;
         }
@@ -146,7 +137,7 @@
             background-color: var(--reskilling-color);
         }
 
-        .governance .dept-header { /* Consistent styling for governance header */
+        .governance .dept-header {
             background-color: var(--governance-color);
         }
 
@@ -350,145 +341,6 @@
             color: var(--secondary-color);
         }
 
-        /* Org chart specific styling */
-        .org-chart {
-            width: 100%;
-            overflow-x: auto;
-            padding: 20px;
-        }
-
-        #org-chart-container {
-            position: relative;
-            min-height: 600px;
-        }
-
-        .org-tree {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .org-level {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-            position: relative;
-            width: 100%;
-        }
-
-        .org-node {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: var(--box-shadow);
-            padding: 15px;
-            margin: 0 15px;
-            min-width: 180px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-        }
-
-        .org-node:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .org-node.c-suite {
-            border-left: 5px solid var(--accent-color);
-        }
-
-        .org-node.executive {
-            border-left: 5px solid var(--secondary-color);
-        }
-
-        .org-node.early-careers {
-            border-left: 5px solid var(--early-careers-color);
-        }
-
-        .org-node.upskilling {
-            border-left: 5px solid var(--upskilling-color);
-        }
-
-        .org-node.reskilling {
-            border-left: 5px solid var(--reskilling-color);
-        }
-
-        .org-node.support {
-            border-left: 5px solid var(--info-color);
-        }
-
-        .org-node-name {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .org-node-title {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 3px;
-        }
-
-        .org-connector {
-            position: absolute;
-            background-color: #aaa;
-        }
-
-        .vertical-connector {
-            width: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .horizontal-connector {
-            height: 2px;
-        }
-
-        /* Search functionality */
-        .search-container {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-box {
-            padding: 10px 15px;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 30px;
-            border: 1px solid #ddd;
-            box-shadow: var(--box-shadow);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .governance-cards,
-            .roles-container {
-                grid-template-columns: 1fr;
-            }
-
-            .tab {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-        }
-
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -520,25 +372,14 @@
             <p class="subtitle">Interactive chart of L&D roles, departments, and governance structure</p>
         </header>
 
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search for roles, departments, or responsibilities..." id="search-input">
-        </div>
-
         <div class="tabs">
-            <div class="tab org-chart active" data-tab="org-chart">Organisation Chart</div>
-            <div class="tab early-careers" data-tab="early-careers">Early Careers</div>
+            <div class="tab early-careers active" data-tab="early-careers">Early Careers</div>
             <div class="tab upskilling" data-tab="upskilling">Upskilling</div>
             <div class="tab reskilling" data-tab="reskilling">Reskilling</div>
             <div class="tab governance" data-tab="governance">Governance</div>
         </div>
 
-        <div class="content-section org-chart active" id="org-chart">
-            <div class="org-chart">
-                <div id="org-chart-container"></div>
-            </div>
-        </div>
-
-        <div class="content-section early-careers" id="early-careers">
+        <div class="content-section early-careers active" id="early-careers">
             <div class="dept-section early-careers">
                 <div class="dept-header">
                     <h2>Early Careers Division</h2>
@@ -842,220 +683,6 @@
     </div>
 
     <script>
-        // Data structures for org chart, role responsibilities and skills
-        const orgChartData = [
-            {
-                id: "ceo",
-                name: "CEO",
-                title: "Chief Executive Officer",
-                description: "Ultimate oversight of all company operations including talent development strategy",
-                type: "c-suite",
-                reportsTo: "Board of Directors",
-                level: 1,
-                children: ["chro", "cpo", "cto", "cfo", "coo", "cso", "cdo", "cdo-digital", "cino", "cmo", "cxo"]
-            },
-            {
-                id: "chro",
-                name: "CHRO",
-                title: "Chief Human Resources Officer",
-                description: "Primary C-suite executive responsible for L&D function",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: ["clo"]
-            },
-            {
-                id: "clo",
-                name: "CLO",
-                title: "Chief Learning Officer",
-                description: "Oversees entire L&D function and strategy",
-                type: "executive",
-                reportsTo: "CHRO",
-                level: 3,
-                children: ["vp-talent", "dir-operations", "dir-content", "dir-technology", "dir-analytics"]
-            },
-            {
-                id: "vp-talent",
-                name: "VP of Talent Development",
-                title: "VP of Talent Development",
-                description: "Leads implementation of L&D strategic initiatives",
-                type: "executive",
-                reportsTo: "CLO",
-                level: 4,
-                children: ["dir-early-careers", "dir-upskilling", "dir-reskilling"]
-            },
-            {
-                id: "dir-early-careers",
-                name: "Director, Early Careers",
-                title: "Director of Early Careers Programmes",
-                description: "Oversees all programmes for entry-level talent",
-                type: "early-careers",
-                reportsTo: "VP of Talent Development",
-                level: 5,
-                children: []
-            },
-            {
-                id: "dir-upskilling",
-                name: "Director, Upskilling",
-                title: "Director of Professional Development & Upskilling",
-                description: "Oversees all programmes for current employees' skill enhancement",
-                type: "upskilling",
-                reportsTo: "VP of Talent Development",
-                level: 5,
-                children: []
-            },
-            {
-                id: "dir-reskilling",
-                name: "Director, Reskilling",
-                title: "Director of Workforce Transformation & Reskilling",
-                description: "Oversees all programmes for transformative skill changes",
-                type: "reskilling",
-                reportsTo: "VP of Talent Development",
-                level: 5,
-                children: []
-            },
-            {
-                id: "dir-operations",
-                name: "Director, L&D Operations",
-                title: "Director of Learning Operations",
-                description: "Ensures efficient execution of all L&D programmes",
-                type: "support",
-                reportsTo: "CLO",
-                level: 4,
-                children: []
-            },
-            {
-                id: "dir-content",
-                name: "Director, Content & Curriculum",
-                title: "Director of Learning Content & Curriculum",
-                description: "Oversees all learning content development",
-                type: "support",
-                reportsTo: "CLO",
-                level: 4,
-                children: []
-            },
-            {
-                id: "dir-technology",
-                name: "Director, Learning Technology",
-                title: "Director of Learning Technology",
-                description: "Oversees all learning technology platforms",
-                type: "support",
-                reportsTo: "CLO",
-                level: 4,
-                children: []
-            },
-            {
-                id: "dir-analytics",
-                name: "Director, Analytics",
-                title: "Director of Learning Analytics & Effectiveness",
-                description: "Oversees measurement of learning impact",
-                type: "support",
-                reportsTo: "CLO",
-                level: 4,
-                children: []
-            },
-            {
-                id: "cpo",
-                name: "CPO",
-                title: "Chief People Officer",
-                description: "Works closely with CHRO on employee experience",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cto",
-                name: "CTO",
-                title: "Chief Technology Officer",
-                description: "Provides technical infrastructure for L&D programmes",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cfo",
-                name: "CFO",
-                title: "Chief Financial Officer",
-                description: "Approves L&D budget and investment strategies",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "coo",
-                name: "COO",
-                title: "Chief Operating Officer",
-                description: "Ensures L&D aligns with operational needs",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cso",
-                name: "CSO",
-                title: "Chief Sustainability Officer",
-                description: "Collaborates on ESG training initiatives",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cdo",
-                name: "CDO",
-                title: "Chief Diversity Officer",
-                description: "Partners on DEI training programmes",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cdo-digital",
-                name: "CDO-Digital",
-                title: "Chief Digital Officer",
-                description: "Collaborates on digital literacy programmes",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cino",
-                name: "CINO",
-                title: "Chief Innovation Officer",
-                description: "Works on innovation capability building",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cmo",
-                name: "CMO",
-                title: "Chief Marketing Officer",
-                description: "Partners on customer-centricity training",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            },
-            {
-                id: "cxo",
-                name: "CXO",
-                title: "Chief Experience Officer",
-                description: "Collaborates on CX and EX training",
-                type: "c-suite",
-                reportsTo: "CEO",
-                level: 2,
-                children: []
-            }
-        ];
-
         // Role responsibilities data
         const roleResponsibilities = {
             "Chief Executive Officer": [
@@ -1194,11 +821,6 @@
             const modalSkillsSection = document.getElementById('modal-skills-section');
             const modalReportsTo = document.getElementById('modal-reports-to');
             const closeModal = document.querySelector('.close-modal');
-            const searchInput = document.getElementById('search-input');
-            const orgChartContainer = document.getElementById('org-chart-container');
-
-            // Initialize the org chart
-            renderOrgChart();
 
             // Tab functionality
             const tabButtons = document.querySelectorAll('.tab');
@@ -1244,133 +866,6 @@
                     modal.style.display = 'none';
                 }
             });
-
-            // Search functionality
-            searchInput.addEventListener('input', () => {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-
-                // Reset view if search is cleared
-                if (searchTerm === '') {
-                    document.querySelectorAll('.role-card').forEach(card => card.style.display = 'block');
-                    document.querySelectorAll('.org-node').forEach(node => node.style.display = 'block');
-                    return;
-                }
-
-                // Search through role cards
-                document.querySelectorAll('.role-card').forEach(card => {
-                    const title = card.querySelector('.role-title').textContent.toLowerCase();
-                    const description = card.querySelector('.role-description').textContent.toLowerCase();
-
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                // Search through org chart nodes
-                document.querySelectorAll('.org-node').forEach(node => {
-                    const nodeId = node.getAttribute('data-id');
-                    const nodeData = orgChartData.find(item => item.id === nodeId);
-
-                    if (nodeData) {
-                        const title = nodeData.title.toLowerCase();
-                        const name = nodeData.name.toLowerCase();
-                        const description = nodeData.description.toLowerCase();
-
-                        if (title.includes(searchTerm) ||
-                            name.includes(searchTerm) ||
-                            description.includes(searchTerm)) {
-                            node.style.display = 'block';
-                        } else {
-                            node.style.display = 'none';
-                        }
-                    }
-                });
-            });
-
-            // Function to render the organization chart
-            function renderOrgChart() {
-                // Clear previous content
-                orgChartContainer.innerHTML = '';
-
-                // Group nodes by level
-                const nodesByLevel = {};
-                orgChartData.forEach(node => {
-                    if (!nodesByLevel[node.level]) {
-                        nodesByLevel[node.level] = [];
-                    }
-                    nodesByLevel[node.level].push(node);
-                });
-
-                // Sort levels to ensure correct order
-                const sortedLevels = Object.keys(nodesByLevel).sort((a, b) => parseInt(a) - parseInt(b));
-
-                // Create levels and nodes
-                sortedLevels.forEach(level => {
-                    const levelNodes = nodesByLevel[level] || [];
-                    if (levelNodes.length > 0) {
-                        const levelDiv = document.createElement('div');
-                        levelDiv.className = 'org-level';
-                        levelDiv.id = `level-${level}`;
-
-                        levelNodes.forEach(nodeData => {
-                            const nodeDiv = createOrgNode(nodeData);
-                            levelDiv.appendChild(nodeDiv);
-                        });
-
-                        orgChartContainer.appendChild(levelDiv);
-                    }
-                });
-
-                // Add connecting lines (this is a simplified version)
-                addConnectingLines();
-            }
-
-            // Function to create an organization chart node
-            function createOrgNode(nodeData) {
-                const nodeDiv = document.createElement('div');
-                nodeDiv.className = `org-node ${nodeData.type}`;
-                nodeDiv.setAttribute('data-id', nodeData.id);
-                nodeDiv.innerHTML = `
-                    <div class="org-node-name">${nodeData.name}</div>
-                    <div class="org-node-title">${nodeData.title}</div>
-                `;
-
-                nodeDiv.addEventListener('click', () => {
-                    showModal(nodeData.name, nodeData.title, nodeData.description, nodeData.type, nodeData.reportsTo);
-                });
-
-                return nodeDiv;
-            }
-
-            // Function to add connecting lines (simplified version)
-            function addConnectingLines() {
-                orgChartData.forEach(node => {
-                    if (node.children && node.children.length > 0) {
-                        const parentNode = document.querySelector(`.org-node[data-id="${node.id}"]`);
-                        if (!parentNode) return;
-
-                        node.children.forEach(childId => {
-                            const childNode = document.querySelector(`.org-node[data-id="${childId}"]`);
-                            if (!childNode) return;
-
-                            // Create a vertical connector from parent to child's level
-                            const verticalConnector = document.createElement('div');
-                            verticalConnector.className = 'org-connector vertical-connector';
-                            const parentRect = parentNode.getBoundingClientRect();
-                            const childRect = childNode.getBoundingClientRect();
-                            const containerRect = orgChartContainer.getBoundingClientRect();
-
-                            // Position the connector (this is simplified)
-                            verticalConnector.style.top = `${parentRect.bottom - containerRect.top}px`;
-                            verticalConnector.style.height = `${childRect.top - parentRect.bottom}px`;
-
-                            orgChartContainer.appendChild(verticalConnector);
-                        });
-                    }
-                });
-            }
 
             // Function to show modal with role details
             function showModal(name, title, description, type, reportsTo) {
