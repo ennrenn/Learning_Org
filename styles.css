@@ -1,0 +1,481 @@
+/* ==============================
+   Variables & Basic Setup
+   ============================== */
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --tertiary: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --light: #ecf0f1;
+    --dark: #2c3e50; /* Same as primary, consider consolidating if always the same */
+    --gray: #95a5a6;
+    --white: #ffffff;
+    --highlight-bg: #fffde7;
+
+    /* Category Colors */
+    --csuite: #9b59b6;
+    --executive: #34495e;
+    --early-careers: #3498db;
+    --upskilling: #2ecc71;
+    --reskilling: #e74c3c;
+    --governance: #f39c12;
+    --support: #1abc9c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    padding: 20px;
+    color: var(--dark);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ==============================
+   General Elements & Layout
+   ============================== */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--primary);
+    font-size: 1.8em;
+}
+
+h2 {
+    margin: 20px 0 15px;
+    color: var(--secondary);
+    font-size: 1.5em;
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 1.15em;
+}
+
+ul {
+    list-style-position: inside; /* Keeps bullets aligned nicely */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+/* Screen Reader Only Utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ==============================
+   Legend
+   ============================== */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 20px; /* Row gap, Column gap */
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+}
+
+/* ==============================
+   Filters & Buttons
+   ============================== */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--white);
+    font-size: 0.9em;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* Example focus shadow */
+}
+
+.btn.active,
+.btn[aria-pressed="true"] { /* Style active state also using aria */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+    transform: translateY(-1px); /* Slight press effect */
+    opacity: 1;
+}
+
+.btn.active:focus,
+.btn[aria-pressed="true"]:focus {
+    /* Combine focus and active styles */
+     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+}
+
+/* Button Color Variants */
+.btn-primary { background-color: var(--csuite); }
+.btn-early-careers { background-color: var(--early-careers); }
+.btn-upskilling { background-color: var(--upskilling); }
+.btn-reskilling { background-color: var(--reskilling); }
+.btn-governance { background-color: var(--governance); }
+.btn-support { background-color: var(--support); }
+.btn-reset { background-color: var(--gray); }
+
+/* ==============================
+   Search Box
+   ============================== */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 400px; /* Max width for search */
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.search-box:focus {
+    border-color: var(--secondary);
+    outline: 2px solid transparent; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3); /* Focus shadow */
+}
+
+/* ==============================
+   View Toggle
+   ============================== */
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.view-toggle button {
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: var(--light);
+    border: 1px solid var(--gray);
+    color: var(--dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.view-toggle button:first-child {
+    border-radius: 4px 0 0 4px;
+    border-right: none; /* Avoid double border */
+}
+
+.view-toggle button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-toggle button.active,
+.view-toggle button[aria-pressed="true"] {
+    background-color: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+
+.view-toggle button:focus {
+     /* Slightly different focus for grouped buttons */
+     outline: none;
+     position: relative; /* Needed for z-index */
+     z-index: 1;
+     border-color: var(--secondary);
+     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.4);
+}
+
+.view-toggle button.active:focus,
+.view-toggle button[aria-pressed="true"]:focus {
+     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.4); /* Keep focus style */
+}
+
+
+/* ==============================
+   Visualization Area & Layouts
+   ============================== */
+.visualization {
+    transition: opacity 0.5s ease; /* Smooth transition for filtering */
+}
+
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ==============================
+   Role Card Styling
+   ============================== */
+.role-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--gray); /* Default border */
+    opacity: 1; /* Default state */
+}
+
+.role-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Card Highlighting States */
+.role-card.highlight {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.01); /* Slight scale */
+    background-color: var(--highlight-bg);
+    border-left-width: 6px; /* Make border thicker */
+    opacity: 1; /* Ensure highlighted are fully opaque */
+}
+
+.role-card.faded {
+    opacity: 0.5;
+    transform: scale(0.98); /* Slightly shrink faded cards */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.role-card.faded:hover {
+     opacity: 0.7; /* Allow slightly more visibility on hover */
+     transform: scale(0.98) translateY(-1px); /* Minimal hover effect when faded */
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Border Colors by Category */
+.role-card.c-suite { border-left-color: var(--csuite); }
+.role-card.early-careers { border-left-color: var(--early-careers); }
+.role-card.upskilling { border-left-color: var(--upskilling); }
+.role-card.reskilling { border-left-color: var(--reskilling); }
+.role-card.governance { border-left-color: var(--governance); }
+.role-card.support { border-left-color: var(--support); }
+.role-card.executive { border-left-color: var(--executive); }
+
+/* Card Content Styling */
+.role-header {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    justify-content: space-between;
+    margin-bottom: 10px; /* Space below header */
+    gap: 10px; /* Space between title and tag */
+}
+
+.role-header h3 {
+    margin-bottom: 0; /* Remove default margin */
+    flex-grow: 1; /* Allow title to take available space */
+}
+
+.category-tag {
+    font-size: 11px; /* Smaller tag text */
+    padding: 3px 10px;
+    border-radius: 12px; /* More rounded */
+    color: var(--white);
+    font-weight: bold;
+    text-transform: uppercase; /* Uppercase tags */
+    letter-spacing: 0.5px;
+    white-space: nowrap; /* Prevent tag wrapping */
+    flex-shrink: 0; /* Prevent tag from shrinking */
+}
+
+/* Tag Background Colors */
+.tag-c-suite { background-color: var(--csuite); }
+.tag-early-careers { background-color: var(--early-careers); }
+.tag-upskilling { background-color: var(--upskilling); }
+.tag-reskilling { background-color: var(--reskilling); }
+.tag-governance { background-color: var(--governance); }
+.tag-support { background-color: var(--support); }
+.tag-executive { background-color: var(--executive); }
+
+.reporting-line {
+    font-style: italic;
+    color: var(--gray);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+/* Button style for the "Reports to" link */
+.reports-to-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0; /* Reset margin */
+    font: inherit; /* Inherit font styles from parent */
+    font-style: italic; /* Keep italic style */
+    font-weight: 600; /* Make it slightly bolder */
+    font-size: 1em; /* Ensure same size as surrounding text */
+    color: var(--secondary);
+    cursor: pointer;
+    text-decoration: none; /* Remove underline by default */
+    display: inline; /* Keep it inline */
+    vertical-align: baseline; /* Align with text */
+    border-bottom: 1px dotted var(--secondary); /* Subtle dotted underline */
+}
+
+.reports-to-btn:hover,
+.reports-to-btn:focus {
+    color: var(--primary);
+    text-decoration: none; /* Ensure no underline on hover/focus if not desired */
+    border-bottom: 1px solid var(--primary); /* Solid underline on interact */
+    outline: none; /* Remove default focus outline if custom style applied */
+}
+
+/* Add specific focus style if needed, e.g., subtle background */
+.reports-to-btn:focus {
+    background-color: rgba(52, 152, 219, 0.1); /* Light blue background on focus */
+    border-radius: 2px;
+}
+
+
+.responsibilities {
+    margin-top: 15px;
+}
+
+.responsibilities ul {
+    padding-left: 0; /* Remove default padding */
+    list-style-type: none; /* Remove default bullets */
+}
+
+.responsibilities li {
+    margin-bottom: 8px;
+    padding-left: 18px; /* Indent list items */
+    position: relative;
+}
+/* Custom bullet */
+.responsibilities li::before {
+    content: '•';
+    color: var(--secondary); /* Use theme color for bullets */
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* ==============================
+   Clear Highlight Button
+   ============================== */
+.clear-highlight-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ==============================
+   Responsiveness
+   ============================== */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        gap: 15px;
+    }
+
+    .grid-view {
+        grid-template-columns: 1fr; /* Stack cards */
+        gap: 15px;
+    }
+
+    .filters {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 7px 14px;
+        font-size: 0.85em;
+    }
+
+    .search-box {
+        max-width: none; /* Allow search to take full width */
+    }
+
+    .role-card {
+        padding: 15px;
+    }
+
+    .clear-highlight-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.4em;
+    }
+     .legend {
+        justify-content: flex-start; /* Align legend items left */
+        gap: 10px 15px;
+    }
+    .role-header {
+        flex-direction: column; /* Stack title and tag */
+        align-items: flex-start;
+    }
+    .category-tag {
+        margin-top: 5px; /* Add space when stacked */
+    }
+}
