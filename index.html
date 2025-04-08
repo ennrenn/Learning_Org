@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate L&D Organisational Chart</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --early-careers-color: #8e44ad;
+            --upskilling-color: #27ae60;
+            --reskilling-color: #d35400;
+            --governance-color: #16a085;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 5px;
+            font-weight: 600;
+            transition: var(--transition);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .tab.org-chart {
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .tab.early-careers {
+            border-bottom: 3px solid var(--early-careers-color);
+        }
+        
+        .tab.upskilling {
+            border-bottom: 3px solid var(--upskilling-color);
+        }
+        
+        .tab.reskilling {
+            border-bottom: 3px solid var(--reskilling-color);
+        }
+        
+        .tab.governance {
+            border-bottom: 3px solid var(--governance-color);
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .org-tree {
+            min-height: 600px;
+            position: relative;
+        }
+        
+        .dept-section {
+            margin-bottom: 40px;
+        }
+        
+        .dept-header {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        .early-careers .dept-header {
+            background-color: var(--early-careers-color);
+        }
+        
+        .upskilling .dept-header {
+            background-color: var(--upskilling-color);
+        }
+        
+        .reskilling .dept-header {
+            background-color: var(--reskilling-color);
+        }
+        
+        .roles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .role-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        
+        .early-careers .role-card::before {
+            background-color: var(--early-careers-color);
+        }
+        
+        .upskilling .role-card::before {
+            background-color: var(--upskilling-color);
+        }
+        
+        .reskilling .role-card::before {
+            background-color: var(--reskilling-color);
+        }
+        
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .role-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .role-level {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .level-leadership {
+            background-color: var(--accent-color);
+        }
+        
+        .level-management {
+            background-color: var(--info-color);
+        }
+        
+        .level-specialist {
+            background-color: var(--success-color);
+        }
+        
+        .role-description {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .role-reports {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: #777;
+        }
+        
+        .governance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .governance-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: var(--transition);
+            border-top: 5px solid var(--governance-color);
+        }
+        
+        .governance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .governance-card h3 {
+            color: var(--governance-color);
+            margin-bottom: 10px;
+        }
+        
+        .governance-detail {
+            margin-bottom: 8px;
+        }
+        
+        .governance-detail strong {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-right: 5px;
+        }
+        
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+        
+        .modal-title {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .modal-subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .modal-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 15px 0;
+        }
+        
+        .modal-description {
+            margin-bottom: 15px;
+        }
+        
+        .modal-section {
+            margin-bottom: 15px;
+        }
+        
+        .modal-section-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+        
+        .list-item {
+            margin-bottom: 3px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .list-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        /* Org chart specific styling */
+        .org-chart {
+            width: 100%;
+            overflow-x: auto;
+            padding: 20px;
+        }
+        
+        #org-chart-container {
+            position: relative;
+            min-height: 600px;
+        }
+        
+        .org-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .org-level {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            position: relative;
+            width: 100%;
+        }
+        
+        .org-node {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 15px;
+            margin: 0 15px;
+            min-width: 180px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+        
+        .org-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .org-node.c-suite {
+            border-left: 5px solid var(--accent-color);
+        }
+        
+        .org-node.executive {
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .org-node.early-careers {
+            border-left: 5px solid var(--early-careers-color);
+        }
+        
+        .org-node.upskilling {
+            border-left: 5px solid var(--upskilling-color);
+        }
+        
+        .org-node.reskilling {
+            border-left: 5px solid var(--reskilling-color);
+        }
+        
+        .org-node.support {
+            border-left: 5px solid var(--info-color);
+        }
+        
+        .org-node-name {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .org-node-title {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .org-connector {
+            position: absolute;
+            background-color: #aaa;
+        }
+        
+        .vertical-connector {
+            width: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .horizontal-connector {
+            height: 2px;
+        }
+        
+        /* Search functionality */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search-box {
+            padding: 10px 15px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            box-shadow: var(--box-shadow);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .governance-cards,
+            .roles-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corporate Learning & Development Organisational Structure</h1>
+            <p class="subtitle">Interactive chart of L&D roles, departments, and governance structure</p>
+        </header>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search for roles, departments, or responsibilities..." id="search-input">
+        </div>
+        
+        <div class="tabs">
+            <div class="tab org-chart active" data-tab="org-chart">Organisation Chart</div>
+            <div class="tab early-careers" data-tab="early-careers">Early Careers</div>
+            <div class="tab upskilling" data-tab="upskilling">Upskilling</div>
+            <div class="tab reskilling" data-tab="reskilling">Reskilling</div>
+            <div class="tab governance" data-tab="governance">Governance</div>
+        </div>
+        
+        <div class="content-section org-chart active" id="org-chart">
+            <div class="org-chart">
+                <div id="org-chart-container"></div>
+            </div>
+        </div>
+        
+        <div class="content-section early-careers" id="early-careers">
+            <div class="dept-section early-careers">
+                <div class="dept-header">
+                    <h2>Early Careers Division</h2>
+                    <p>Focused on developing entry-level talent through university partnerships, internships, and graduate programmes</p>
+                </div>
+                
+                <div class="roles-container">
+                    <div class="role-card">
+                        <div class="role-title">Director of Early Careers Programmes</div>
+                        <div class="role-level level-leadership">Leadership</div>
+                        <div class="role-description">Oversees all programmes for entry-level talent. Develops strategy for attracting and developing new talent.</div>
+                        <div class="role-reports">Reports to: VP of Talent Development</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, University Relations & Recruitment</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Builds relationships with educational institutions. Oversees campus recruiting efforts. Manages internship programme design.</div>
+                        <div class="role-reports">Reports to: Director of Early Careers Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Graduate Development Programmes</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Designs and implements rotational programmes. Oversees new graduate onboarding curriculum. Coordinates mentorship programmes for recent graduates.</div>
+                        <div class="role-reports">Reports to: Director of Early Careers Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Early Career Assessment & Advancement</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Designs assessment frameworks for early career employees. Tracks progression of associates through development pathways. Identifies high-potential early career talent.</div>
+                        <div class="role-reports">Reports to: Director of Early Careers Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">University Partnership Specialists</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Maintains specific university relationships. Coordinates campus events and recruitment activities.</div>
+                        <div class="role-reports">Reports to: Manager, University Relations & Recruitment</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Graduate Programme Coordinators</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Administers day-to-day operation of rotational programmes. Supports onboarding logistics and content delivery.</div>
+                        <div class="role-reports">Reports to: Manager, Graduate Development Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Internship Coordinators</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Manages internship application and placement process. Supports intern experience and evaluation.</div>
+                        <div class="role-reports">Reports to: Manager, Early Career Assessment & Advancement</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Early Career Coaches</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Provides one-on-one coaching for new graduates. Facilitates peer learning groups.</div>
+                        <div class="role-reports">Reports to: Manager, Early Career Assessment & Advancement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section upskilling" id="upskilling">
+            <div class="dept-section upskilling">
+                <div class="dept-header">
+                    <h2>Upskilling Division</h2>
+                    <p>Dedicated to enhancing skills of current employees across technical, leadership, and business competencies</p>
+                </div>
+                
+                <div class="roles-container">
+                    <div class="role-card">
+                        <div class="role-title">Director of Professional Development & Upskilling</div>
+                        <div class="role-level level-leadership">Leadership</div>
+                        <div class="role-description">Oversees all programmes for current employees' skill enhancement. Develops strategy for continuous improvement of workforce capabilities.</div>
+                        <div class="role-reports">Reports to: VP of Talent Development</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Technical Skills Development</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Designs programmes for technical competency advancement. Coordinates with department heads on technical needs. Manages technical training curriculum.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Leadership Development</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Oversees leadership training programmes. Designs advancement pathways for emerging leaders. Coordinates high-potential employee programmes.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Business & Soft Skills</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Designs curriculum for cross-functional business skills. Oversees communication, collaboration, and other soft skills programmes. Manages change management training.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Learning Technology & Innovation</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Oversees learning management system and digital learning tools. Develops innovative learning approaches (VR, gamification, etc.). Manages learning analytics and reporting.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Sustainability & ESG Skills</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Works closely with the CSO's office. Develops sustainability training curriculum. Integrates ESG principles into existing training programmes.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Diversity & Inclusion Learning</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Partners with the CDO's office. Develops inclusive leadership capabilities. Creates and delivers DEI-focused learning content.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Experience Design Learning</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Works closely with the CXO's office. Develops customer experience and employee experience training. Creates learning programmes on journey mapping and experience design.</div>
+                        <div class="role-reports">Reports to: Director of Professional Development & Upskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Technical Training Specialists</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Develops and delivers technical training content. Stays current on industry technical trends. Assesses technical competency development.</div>
+                        <div class="role-reports">Reports to: Manager, Technical Skills Development</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Leadership Development Specialists</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Delivers leadership training programmes. Coaches emerging leaders. Facilitates leadership assessment centres.</div>
+                        <div class="role-reports">Reports to: Manager, Leadership Development</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section reskilling" id="reskilling">
+            <div class="dept-section reskilling">
+                <div class="dept-header">
+                    <h2>Reskilling Division</h2>
+                    <p>Specialized in transformative skill changes to adapt the workforce to major business shifts</p>
+                </div>
+                
+                <div class="roles-container">
+                    <div class="role-card">
+                        <div class="role-title">Director of Workforce Transformation & Reskilling</div>
+                        <div class="role-level level-leadership">Leadership</div>
+                        <div class="role-description">Oversees all programmes for transformative skill changes. Develops strategy for adapting workforce to major business shifts.</div>
+                        <div class="role-reports">Reports to: VP of Talent Development</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Future Skills Assessment</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Identifies future skill needs based on business strategy. Assesses current workforce capabilities against future needs. Develops skill gap analysis reports.</div>
+                        <div class="role-reports">Reports to: Director of Workforce Transformation & Reskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Career Transition Programmes</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Designs comprehensive reskilling pathways. Oversees major career transition programmes. Coordinates with business units on placement of reskilled employees.</div>
+                        <div class="role-reports">Reports to: Director of Workforce Transformation & Reskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Manager, Digital Transformation Learning</div>
+                        <div class="role-level level-management">Management</div>
+                        <div class="role-description">Focuses specifically on digital and technological reskilling. Coordinates with IT on digital skill requirements. Oversees digital literacy baseline programmes.</div>
+                        <div class="role-reports">Reports to: Director of Workforce Transformation & Reskilling</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Workforce Skills Analysts</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Conducts skills assessments. Maps current to future skill requirements. Identifies candidates for reskilling initiatives.</div>
+                        <div class="role-reports">Reports to: Manager, Future Skills Assessment</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Career Transition Specialists</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Provides guidance to employees undergoing reskilling. Facilitates career change conversations. Supports job placement for reskilled employees.</div>
+                        <div class="role-reports">Reports to: Manager, Career Transition Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Reskilling Programme Coordinators</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Administers reskilling curriculum. Tracks participant progress. Coordinates with external training providers.</div>
+                        <div class="role-reports">Reports to: Manager, Career Transition Programmes</div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-title">Digital Skills Trainers</div>
+                        <div class="role-level level-specialist">Specialist</div>
+                        <div class="role-description">Delivers specialised digital upskilling content. Facilitates technology adoption programmes. Assesses digital competency development.</div>
+                        <div class="role-reports">Reports to: Manager, Digital Transformation Learning</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section governance" id="governance">
+            <div class="dept-section governance">
+                <div class="dept-header" style="background-color: var(--governance-color);">
+                    <h2>Governance Structure</h2>
+                    <p>The councils and committees that oversee and guide L&D initiatives</p>
+                </div>
+                
+                <div class="governance-cards">
+                    <div class="governance-card">
+                        <h3>L&D Council</h3>
+                        <div class="governance-detail"><strong>Chair:</strong> Chief Learning Officer</div>
+                        <div class="governance-detail"><strong>Members:</strong> Representatives from all major business units</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Quarterly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Reviews L&D strategy and priorities, approves major new initiatives</div>
+                    </div>
+                    
+                    <div class="governance-card">
+                        <h3>Skills Advisory Boards</h3>
+                        <div class="governance-detail"><strong>Chair:</strong> Respective Functional Leaders</div>
+                        <div class="governance-detail"><strong>Members:</strong> Subject matter experts from the business</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Bi-monthly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Provides input on specific skill needs and priorities, reviews curriculum for technical accuracy</div>
+                    </div>
+                    
+                    <div class="governance-card">
+                        <h3>Sustainability Skills Council</h3>
+                        <div class="governance-detail"><strong>Co-Chairs:</strong> CSO and Senior L&D Leader</div>
+                        <div class="governance-detail"><strong>Members:</strong> Sustainability experts and business unit representatives</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Monthly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Identifies sustainability competencies needed across roles, reviews sustainability content in learning programmes</div>
+                    </div>
+                    
+                    <div class="governance-card">
+                        <h3>Diversity & Inclusion Learning Council</h3>
+                        <div class="governance-detail"><strong>Co-Chairs:</strong> CDO and Senior L&D Leader</div>
+                        <div class="governance-detail"><strong>Members:</strong> Diverse representatives from across the organisation</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Monthly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Reviews learning content for inclusivity and representation, advises on DEI learning objectives and approaches</div>
+                    </div>
+                    
+                    <div class="governance-card">
+                        <h3>Experience Design Learning Council</h3>
+                        <div class="governance-detail"><strong>Co-Chairs:</strong> CXO and Senior L&D Leader</div>
+                        <div class="governance-detail"><strong>Members:</strong> Customer experience, employee experience, and service design experts</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Monthly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Reviews experience design learning content and approaches, identifies experience capability needs across the organisation</div>
+                    </div>
+                    
+                    <div class="governance-card">
+                        <h3>Learning Experience Committee</h3>
+                        <div class="governance-detail"><strong>Chair:</strong> Rotating (employee volunteers)</div>
+                        <div class="governance-detail"><strong>Members:</strong> Employees from various levels and departments</div>
+                        <div class="governance-detail"><strong>Frequency:</strong> Monthly</div>
+                        <div class="governance-detail"><strong>Responsibilities:</strong> Provides feedback on learner experience, tests new learning approaches, acts as learning champions across the organisation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for detailed information -->
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title" id="modal-title">Role Title</h2>
+            <h3 class="modal-subtitle" id="modal-subtitle">Subtitle</h3>
+            <div class="modal-divider"></div>
+            <div class="modal-description" id="modal-description">Description</div>
+            
+            <div class="modal-section" id="modal-responsibilities-section">
+                <h4 class="modal-section-title">Key Responsibilities</h4>
+                <div id="modal-responsibilities">
+                    <!-- Responsibilities will be populated dynamically -->
+                </div>
+            </div>
+            
+            <div class="modal-section" id="modal-skills-section">
+                <h4 class="modal-section-title">Required Skills</h4>
+                <div id="modal-skills">
+                    <!-- Skills will be populated dynamically -->
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4 class="modal-section-title">Reports To</h4>
+                <div id="modal-reports-to">
+                    <!-- Reports to will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structures for org chart, role responsibilities and skills
+        const orgChartData = [
+            {
+                id: "ceo",
+                name: "CEO",
+                title: "Chief Executive Officer",
+                description: "Ultimate oversight of all company operations including talent development strategy",
+                type: "c-suite",
+                reportsTo: "Board of Directors",
+                level: 1,
+                children: ["chro", "cpo", "cto", "cfo", "coo", "cso", "cdo", "cdo-digital", "cino", "cmo", "cxo"]
+            },
+            {
+                id: "chro",
+                name: "CHRO",
+                title: "Chief Human Resources Officer",
+                description: "Primary C-suite executive responsible for L&D function",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: ["clo"]
+            },
+            {
+                id: "clo",
+                name: "CLO",
+                title: "Chief Learning Officer",
+                description: "Oversees entire L&D function and strategy",
+                type: "executive",
+                reportsTo: "CHRO",
+                level: 3,
+                children: ["vp-talent", "dir-operations", "dir-content", "dir-technology", "dir-analytics"]
+            },
+            {
+                id: "vp-talent",
+                name: "VP of Talent Development",
+                title: "VP of Talent Development",
+                description: "Leads implementation of L&D strategic initiatives",
+                type: "executive",
+                reportsTo: "CLO",
+                level: 4,
+                children: ["dir-early-careers", "dir-upskilling", "dir-reskilling"]
+            },
+            {
+                id: "dir-early-careers",
+                name: "Director, Early Careers",
+                title: "Director of Early Careers Programmes",
+                description: "Oversees all programmes for entry-level talent",
+                type: "early-careers",
+                reportsTo: "VP of Talent Development",
+                level: 5,
+                children: []
+            },
+            {
+                id: "dir-upskilling",
+                name: "Director, Upskilling",
+                title: "Director of Professional Development & Upskilling",
+                description: "Oversees all programmes for current employees' skill enhancement",
+                type: "upskilling",
+                reportsTo: "VP of Talent Development",
+                level: 5,
+                children: []
+            },
+            {
+                id: "dir-reskilling",
+                name: "Director, Reskilling",
+                title: "Director of Workforce Transformation & Reskilling",
+                description: "Oversees all programmes for transformative skill changes",
+                type: "reskilling",
+                reportsTo: "VP of Talent Development",
+                level: 5,
+                children: []
+            },
+            {
+                id: "dir-operations",
+                name: "Director, L&D Operations",
+                title: "Director of Learning Operations",
+                description: "Ensures efficient execution of all L&D programmes",
+                type: "support",
+                reportsTo: "CLO",
+                level: 4,
+                children: []
+            },
+            {
+                id: "dir-content",
+                name: "Director, Content & Curriculum",
+                title: "Director of Learning Content & Curriculum",
+                description: "Oversees all learning content development",
+                type: "support",
+                reportsTo: "CLO",
+                level: 4,
+                children: []
+            },
+            {
+                id: "dir-technology",
+                name: "Director, Learning Technology",
+                title: "Director of Learning Technology",
+                description: "Oversees all learning technology platforms",
+                type: "support",
+                reportsTo: "CLO",
+                level: 4,
+                children: []
+            },
+            {
+                id: "dir-analytics",
+                name: "Director, Analytics",
+                title: "Director of Learning Analytics & Effectiveness",
+                description: "Oversees measurement of learning impact",
+                type: "support",
+                reportsTo: "CLO",
+                level: 4,
+                children: []
+            },
+            {
+                id: "cpo",
+                name: "CPO",
+                title: "Chief People Officer",
+                description: "Works closely with CHRO on employee experience",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cto",
+                name: "CTO",
+                title: "Chief Technology Officer",
+                description: "Provides technical infrastructure for L&D programmes",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cfo",
+                name: "CFO",
+                title: "Chief Financial Officer",
+                description: "Approves L&D budget and investment strategies",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "coo",
+                name: "COO",
+                title: "Chief Operating Officer",
+                description: "Ensures L&D aligns with operational needs",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cso",
+                name: "CSO",
+                title: "Chief Sustainability Officer",
+                description: "Collaborates on ESG training initiatives",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cdo",
+                name: "CDO",
+                title: "Chief Diversity Officer",
+                description: "Partners on DEI training programmes",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cdo-digital",
+                name: "CDO-Digital",
+                title: "Chief Digital Officer",
+                description: "Collaborates on digital literacy programmes",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cino",
+                name: "CINO",
+                title: "Chief Innovation Officer",
+                description: "Works on innovation capability building",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cmo",
+                name: "CMO",
+                title: "Chief Marketing Officer",
+                description: "Partners on customer-centricity training",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            },
+            {
+                id: "cxo",
+                name: "CXO",
+                title: "Chief Experience Officer",
+                description: "Collaborates on CX and EX training",
+                type: "c-suite",
+                reportsTo: "CEO",
+                level: 2,
+                children: []
+            }
+        ];
+
+        // Role responsibilities data
+        const roleResponsibilities = {
+            "Chief Executive Officer": [
+                "Set overall company vision and strategy",
+                "Approve major L&D investments and initiatives",
+                "Ensure alignment between business strategy and talent development",
+                "Create a culture that values learning and development",
+                "Hold executives accountable for workforce development"
+            ],
+            "Chief Human Resources Officer": [
+                "Develop comprehensive HR strategy including talent development",
+                "Oversee all people-related functions",
+                "Link L&D to broader HR initiatives like performance management",
+                "Ensure alignment between business strategy and HR programmes",
+                "Report on workforce metrics to executive team"
+            ],
+            "Chief Learning Officer": [
+                "Set the learning strategy for the entire organisation",
+                "Lead the L&D function and its integration with business objectives",
+                "Manage L&D budget and resource allocation",
+                "Measure and report on L&D effectiveness to C-suite",
+                "Stay current on learning trends and innovations"
+            ],
+            "Director of Early Careers Programmes": [
+                "Develop and implement early career strategy",
+                "Build partnerships with universities and educational institutions",
+                "Design and oversee graduate and internship programmes",
+                "Create development pathways for recent graduates",
+                "Track and report on early career programme metrics"
+            ],
+            "Director of Professional Development & Upskilling": [
+                "Lead upskilling initiatives across the organisation",
+                "Identify critical skill gaps in the current workforce",
+                "Develop programmes to build capabilities in existing employees",
+                "Partner with business units to prioritize upskilling needs",
+                "Measure and track effectiveness of upskilling programmes"
+            ],
+            "Director of Workforce Transformation & Reskilling": [
+                "Lead major workforce transformation initiatives",
+                "Develop reskilling strategies for roles impacted by automation",
+                "Create career transition pathways for employees",
+                "Work with business leaders on future workforce planning",
+                "Establish metrics for measuring reskilling success"
+            ],
+            "Chief Sustainability Officer": [
+                "Lead organisation-wide sustainability initiatives",
+                "Collaborate on developing ESG competencies across the workforce",
+                "Ensure sustainability principles are integrated into leadership development",
+                "Partner with L&D on climate literacy and sustainability training",
+                "Measure progress on sustainability skill development"
+            ],
+            "Chief Experience Officer": [
+                "Lead customer and employee experience strategy",
+                "Collaborate on experience design training programmes",
+                "Define experience skills needed across the organisation",
+                "Partner with L&D on journey mapping and service design capabilities",
+                "Ensure learning approaches create positive learner experiences"
+            ]
+        };
+
+        // Role skills data
+        const roleSkills = {
+            "Chief Executive Officer": [
+                "Strategic leadership",
+                "Business acumen",
+                "Stakeholder management",
+                "Organizational development",
+                "Financial management",
+                "Change leadership"
+            ],
+            "Chief Human Resources Officer": [
+                "HR strategy development",
+                "Talent management expertise",
+                "Change management",
+                "Executive leadership",
+                "Workforce planning",
+                "Compensation and benefits strategy"
+            ],
+            "Chief Learning Officer": [
+                "L&D strategy and operations",
+                "Adult learning principles",
+                "L&D technology landscape",
+                "Learning measurement and analytics",
+                "Budget management",
+                "Executive stakeholder management"
+            ],
+            "Director of Early Careers Programmes": [
+                "Campus recruitment strategies",
+                "Graduate development programme design",
+                "Higher education partnership management",
+                "Early career assessment methods",
+                "Gen Z engagement techniques"
+            ],
+            "Director of Professional Development & Upskilling": [
+                "Skills gap analysis",
+                "Learning programme design",
+                "Blended learning methodologies",
+                "Change management",
+                "Stakeholder engagement"
+            ],
+            "Director of Workforce Transformation & Reskilling": [
+                "Workforce planning",
+                "Career transition programme design",
+                "Organisational change management",
+                "Future of work trends",
+                "Skills assessment methodologies"
+            ],
+            "Chief Sustainability Officer": [
+                "ESG frameworks and standards",
+                "Sustainability strategy",
+                "Change management",
+                "Stakeholder engagement",
+                "Sustainability reporting",
+                "Climate risk assessment"
+            ],
+            "Chief Experience Officer": [
+                "Customer journey mapping",
+                "Employee experience design",
+                "Service design methodologies",
+                "Experience measurement frameworks",
+                "Design thinking",
+                "Voice of customer methodologies"
+            ]
+        };
+
+        // Wait until DOM is fully loaded before running code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cache DOM elements used multiple times
+            const modal = document.getElementById('detail-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSubtitle = document.getElementById('modal-subtitle');
+            const modalDescription = document.getElementById('modal-description');
+            const modalResponsibilities = document.getElementById('modal-responsibilities');
+            const modalResponsibilitiesSection = document.getElementById('modal-responsibilities-section');
+            const modalSkills = document.getElementById('modal-skills');
+            const modalSkillsSection = document.getElementById('modal-skills-section');
+            const modalReportsTo = document.getElementById('modal-reports-to');
+            const closeModal = document.querySelector('.close-modal');
+            const searchInput = document.getElementById('search-input');
+            const orgChartContainer = document.getElementById('org-chart-container');
+
+            // Initialize the org chart
+            renderOrgChart();
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // Toggle active class on tabs
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Toggle active class on content sections
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === tabId) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Setup role cards
+            document.querySelectorAll('.role-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = card.querySelector('.role-title').textContent;
+                    const description = card.querySelector('.role-description').textContent;
+                    const level = card.querySelector('.role-level').textContent;
+                    const reportsTo = card.querySelector('.role-reports').textContent.replace('Reports to: ', '');
+                    
+                    showModal(title, title, description, level, reportsTo);
+                });
+            });
+
+            // Modal functionality
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // Reset view if search is cleared
+                    document.querySelectorAll('.role-card').forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    document.querySelectorAll('.org-node').forEach(node => {
+                        node.style.display = 'block';
+                    });
+                    return;
+                }
+                
+                // Search through role cards
+                document.querySelectorAll('.role-card').forEach(card => {
+                    const title = card.querySelector('.role-title').textContent.toLowerCase();
+                    const description = card.querySelector('.role-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Search through org chart nodes
+                document.querySelectorAll('.org-node').forEach(node => {
+                    const nodeId = node.getAttribute('data-id');
+                    const nodeData = orgChartData.find(item => item.id === nodeId);
+                    
+                    if (nodeData) {
+                        const title = nodeData.title.toLowerCase();
+                        const name = nodeData.name.toLowerCase();
+                        const description = nodeData.description.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || 
+                            name.includes(searchTerm) || 
+                            description.includes(searchTerm)) {
+                            node.style.display = 'block';
+                        } else {
+                            node.style.display = 'none';
+                        }
+                    }
+                });
+            });
+
+            // Function to render the organization chart
+            function renderOrgChart() {
+                // Clear previous content
+                orgChartContainer.innerHTML = '';
+                
+                // Group nodes by level
+                const nodesByLevel = {};
+                orgChartData.forEach(node => {
+                    if (!nodesByLevel[node.level]) {
+                        nodesByLevel[node.level] = [];
+                    }
+                    nodesByLevel[node.level].push(node);
+                });
+                
+                // Create levels and nodes
+                for (let level = 1; level <= Object.keys(nodesByLevel).length; level++) {
+                    const levelNodes = nodesByLevel[level] || [];
+                    if (levelNodes.length > 0) {
+                        const levelDiv = document.createElement('div');
+                        levelDiv.className = 'org-level';
+                        levelDiv.id = `level-${level}`;
+                        
+                        levelNodes.forEach(nodeData => {
+                            const nodeDiv = createOrgNode(nodeData);
+                            levelDiv.appendChild(nodeDiv);
+                        });
+                        
+                        orgChartContainer.appendChild(levelDiv);
+                    }
+                }
+                
+                // Add connecting lines (this is a simplified version)
+                addConnectingLines();
+            }
+            
+            // Function to create an organization chart node
+            function createOrgNode(nodeData) {
+                const nodeDiv = document.createElement('div');
+                nodeDiv.className = `org-node ${nodeData.type}`;
+                nodeDiv.setAttribute('data-id', nodeData.id);
+                nodeDiv.innerHTML = `
+                    <div class="org-node-name">${nodeData.name}</div>
+                    <div class="org-node-title">${nodeData.title}</div>
+                `;
+                
+                nodeDiv.addEventListener('click', () => {
+                    showModal(nodeData.name, nodeData.title, nodeData.description, nodeData.type, nodeData.reportsTo);
+                });
+                
+                return nodeDiv;
+            }
+            
+            // Function to add connecting lines (simplified version)
+            function addConnectingLines() {
+                orgChartData.forEach(node => {
+                    if (node.children && node.children.length > 0) {
+                        const parentNode = document.querySelector(`.org-node[data-id="${node.id}"]`);
+                        if (!parentNode) return;
+                        
+                        node.children.forEach(childId => {
+                            const childNode = document.querySelector(`.org-node[data-id="${childId}"]`);
+                            if (!childNode) return;
+                            
+                            // Create a vertical connector from parent to child's level
+                            const verticalConnector = document.createElement('div');
+                            verticalConnector.className = 'org-connector vertical-connector';
+                            const parentRect = parentNode.getBoundingClientRect();
+                            const childRect = childNode.getBoundingClientRect();
+                            const containerRect = orgChartContainer.getBoundingClientRect();
+                            
+                            // Position the connector (this is simplified)
+                            verticalConnector.style.top = `${parentRect.bottom - containerRect.top}px`;
+                            verticalConnector.style.height = `${childRect.top - parentRect.bottom}px`;
+                            
+                            orgChartContainer.appendChild(verticalConnector);
+                        });
+                    }
+                });
+            }
+            
+            // Function to show modal with role details
+            function showModal(name, title, description, type, reportsTo) {
+                modalTitle.textContent = title;
+                modalSubtitle.textContent = name;
+                modalDescription.textContent = description;
+                modalReportsTo.textContent = reportsTo || 'N/A';
+                
+                // Get role responsibilities
+                const responsibilities = roleResponsibilities[title] || [];
+                if (responsibilities.length > 0) {
+                    modalResponsibilities.innerHTML = '';
+                    responsibilities.forEach(resp => {
+                        const listItem = document.createElement('div');
+                        listItem.className = 'list-item';
+                        listItem.textContent = resp;
+                        modalResponsibilities.appendChild(listItem);
+                    });
+                    modalResponsibilitiesSection.style.display = 'block';
+                } else {
+                    modalResponsibilitiesSection.style.display = 'none';
+                }
+                
+                // Get role skills
+                const skills = roleSkills[title] || [];
+                if (skills.length > 0) {
+                    modalSkills.innerHTML = '';
+                    skills.forEach(skill => {
+                        const listItem = document.createElement('div');
+                        listItem.className = 'list-item';
+                        listItem.textContent = skill;
+                        modalSkills.appendChild(listItem);
+                    });
+                    modalSkillsSection.style.display = 'block';
+                } else {
+                    modalSkillsSection.style.display = 'none';
+                }
+                
+                modal.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
